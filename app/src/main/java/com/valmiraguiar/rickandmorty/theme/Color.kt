@@ -1,4 +1,4 @@
-package com.valmiraguiar.rickandmorty.ui.theme
+package com.valmiraguiar.rickandmorty.theme
 
 import androidx.compose.ui.graphics.Color
 

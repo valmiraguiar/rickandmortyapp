@@ -1,11 +1,11 @@
-package com.valmiraguiar.rickandmorty.ui.theme
+package com.valmiraguiar.rickandmorty.theme
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 
 private val lightColorScheme = AppColorScheme(
-    background = White100,
+    background = White,
     onBackground = Black100,
     primary = Blue100,
     onPrimary = White100,
@@ -25,6 +25,7 @@ fun AppTheme(
     CompositionLocalProvider(
         LocalAppColorScheme provides colorScheme,
         LocalAppTypography provides typography,
+        LocalAppShape provides shape,
         LocalAppSize provides size,
         content = content
     )
