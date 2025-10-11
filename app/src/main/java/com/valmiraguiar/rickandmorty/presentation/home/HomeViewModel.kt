@@ -17,7 +17,7 @@ class HomeViewModel : ViewModel() {
 
             try {
                 _state.update { it.copy(characterList = mockCharacterList) }
-            } catch (e: Exception) {
+            } catch (_: Exception) {
                 _state.update { it.copy(isError = true) }
             } finally {
                 _state.update { it.copy(isLoading = false) }
