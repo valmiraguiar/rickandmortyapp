@@ -1,20 +1,23 @@
 package com.valmiraguiar.rickandmorty.theme
 
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
 val typography = AppTypography(
     titleLarge = TextStyle(
-        fontWeight = FontWeight.SemiBold,
-        fontSize = 32.sp
+        fontWeight = FontWeight.Bold,
+        fontSize = 24.sp,
     ),
     titleNormal = TextStyle(
         fontWeight = FontWeight.Light,
         fontSize = 20.sp
     ),
     body = TextStyle(
-        fontSize = 16.sp
+        fontSize = 12.sp,
+        color = Gray100
     ),
     labelLarge = TextStyle(
         fontWeight = FontWeight.Medium,
