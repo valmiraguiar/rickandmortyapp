@@ -14,18 +14,21 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import com.valmiraguiar.rickandmorty.theme.AppTheme
+import com.valmiraguiar.rickandmorty.theme.Dimensions
 import com.valmiraguiar.rickandmorty.theme.Gray200
 import com.valmiraguiar.rickandmorty.theme.RickAndMortyTheme
 
 @Composable
-fun CharacterItem(characterName: String) {
+fun CharacterItem(
+    characterName: String,
+    onItemClick: () -> Unit
+) {
     Surface(
         modifier = Modifier
             .fillMaxSize()
             .clickable {
-                /*TODO - Add click action*/
+                onItemClick()
             },
 
         ) {
@@ -50,7 +53,7 @@ fun CharacterItem(characterName: String) {
                 )
 
                 Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    horizontalArrangement = Arrangement.spacedBy(Dimensions.SpacingNano)
                 ) {
                     Text("Male", style = RickAndMortyTheme.typography.body)
                     Text("Alive", style = RickAndMortyTheme.typography.body)
@@ -64,6 +67,8 @@ fun CharacterItem(characterName: String) {
 @Composable
 fun CharacterItemPreview() {
     AppTheme {
-        CharacterItem("Rick Sanchez")
+        CharacterItem("Rick Sanchez") {
+            println("")
+        }
     }
 }

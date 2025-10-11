@@ -1,4 +1,6 @@
 package com.valmiraguiar.rickandmorty.presentation.details
 
-class DetailsViewModel {
+import androidx.lifecycle.ViewModel
+
+class DetailsViewModel: ViewModel() {
 }

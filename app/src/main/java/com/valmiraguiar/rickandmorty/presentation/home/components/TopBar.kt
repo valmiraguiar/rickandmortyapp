@@ -20,7 +20,7 @@ fun TopBar(
         modifier = modifier
             .fillMaxWidth()
             .height(Dimensions.TopBarHeight)
-            .padding(Dimensions.SmallPadding),
+            .padding(Dimensions.SpacingXSNano),
         contentAlignment = Alignment.Center
     ) {
         Image(
