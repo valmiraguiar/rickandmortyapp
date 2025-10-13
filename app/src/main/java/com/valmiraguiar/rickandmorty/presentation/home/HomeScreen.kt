@@ -11,6 +11,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valmiraguiar.rickandmorty.presentation.home.components.CharacterList
+import com.valmiraguiar.rickandmorty.presentation.home.components.Loading
 import com.valmiraguiar.rickandmorty.presentation.home.components.TopBar
 import com.valmiraguiar.rickandmorty.theme.RickAndMortyTheme
 import org.koin.androidx.compose.koinViewModel
@@ -40,6 +41,8 @@ fun HomeScreen(
                 .background(color = RickAndMortyTheme.colorScheme.background)
                 .padding(innerPadding)
         ) {
+            Loading(characterState.value.isLoading)
+
             CharacterList(
                 characterList = characterState.value.characterList,
                 onItemClick = onNavigationClick
