@@ -2,48 +2,42 @@ package com.valmiraguiar.rickandmorty.presentation.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.valmiraguiar.rickandmorty.domain.usecases.CharacterUseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class HomeViewModel : ViewModel() {
+class HomeViewModel(
+    private val dispatcher: CoroutineContext,
+    private val characterUseCase: CharacterUseCase
+) : ViewModel() {
     private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(HomeScreenState())
     val state: StateFlow<HomeScreenState> get() = _state
 
     fun loadData() {
         viewModelScope.launch {
-            _state.update { it.copy(isLoading = true) }
+            withContext(dispatcher) {
+                _state.update { it.copy(isLoading = true) }
 
-            try {
-                _state.update { it.copy(characterList = mockCharacterList) }
-            } catch (_: Exception) {
-                _state.update { it.copy(isError = true) }
-            } finally {
-                _state.update { it.copy(isLoading = false) }
+                try {
+                    characterUseCase.getCharacterList().collect { characterList ->
+                        _state.update {
+                            it.copy(
+                                characterList = characterList.map { character ->
+                                    character.name
+                                }
+                            )
+                        }
+                    }
+                } catch (e: Exception) {
+                    _state.update { it.copy(isError = true) }
+                } finally {
+                    _state.update { it.copy(isLoading = false) }
+                }
             }
         }
-    }
-
-    private companion object {
-        val mockCharacterList: List<String> = listOf<String>(
-            "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez", "Morty Smith",
-            "Johnny Depp",
-            "Rick Sanchez",
-        )
     }
 }

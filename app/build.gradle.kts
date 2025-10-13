@@ -6,6 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.kotlinx.serialization)
     id("kotlin-parcelize")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -23,11 +24,23 @@ android {
     }
 
     buildTypes {
+        debug {
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL_API",
+                value = "\"https://rickandmortyapi.com/\""
+            )
+        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
+            )
+            buildConfigField(
+                type = "String",
+                name = "BASE_URL_API",
+                value = "\"https://rickandmortyapi.com/\""
             )
         }
     }
@@ -42,6 +55,7 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
 
@@ -75,4 +89,17 @@ dependencies {
     implementation(libs.koin.androidx.compose)
     implementation(libs.koin.core)
     implementation(libs.koin.navigation)
+
+    // OkHttp
+    implementation(libs.okhttp)
+    implementation(libs.okhttp.interceptor)
+
+    // Retrofit
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.moshi.converter)
+
+    // Moshi
+    implementation(libs.moshi)
+    implementation(libs.moshi.kotlin)
+    ksp(libs.moshi.kotlin.codegen)
 }
