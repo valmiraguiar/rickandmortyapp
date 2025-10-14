@@ -8,13 +8,14 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import com.valmiraguiar.rickandmorty.domain.entity.Character
 import com.valmiraguiar.rickandmorty.theme.Dimensions
 
 private const val GRID_CELLS = 2
 
 @Composable
 fun CharacterList(
-    characterList: List<String>,
+    characterList: List<Character>,
     onItemClick: () -> Unit
 ) {
     LazyVerticalGrid(
@@ -26,7 +27,7 @@ fun CharacterList(
     ) {
         items(characterList) { item ->
             CharacterItem(
-                characterName = item,
+                character = item,
                 onItemClick = onItemClick
             )
         }

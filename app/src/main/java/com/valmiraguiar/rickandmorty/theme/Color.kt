@@ -13,3 +13,6 @@ val Black100 = Color(0xFF111111)
 val Blue100 = Color(0xFF00B2CF)
 val Blue200 = Color(0xFF01636F)
 val Blue300 = Color(0xFF00535E)
+
+val Green100 = Color(0xFF08C952)
+val Yellow100 = Color(0xFFEDCF6B)

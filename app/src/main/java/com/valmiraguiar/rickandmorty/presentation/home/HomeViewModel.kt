@@ -26,9 +26,7 @@ class HomeViewModel(
                     characterUseCase.getCharacterList().collect { characterList ->
                         _state.update {
                             it.copy(
-                                characterList = characterList.map { character ->
-                                    character.name
-                                }
+                                characterList = characterList
                             )
                         }
                     }
