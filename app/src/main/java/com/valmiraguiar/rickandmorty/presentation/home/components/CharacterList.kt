@@ -16,7 +16,7 @@ private const val GRID_CELLS = 2
 @Composable
 fun CharacterList(
     characterList: LazyPagingItems<Character>,
-    onItemClick: () -> Unit
+    onItemClick: (characterId: Int) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(GRID_CELLS),
@@ -29,7 +29,7 @@ fun CharacterList(
             characterList[itemIndex]?.let { character ->
                 CharacterItem(
                     character = character,
-                    onItemClick = onItemClick
+                    onItemClick = { onItemClick(character.id) }
                 )
             }
         }

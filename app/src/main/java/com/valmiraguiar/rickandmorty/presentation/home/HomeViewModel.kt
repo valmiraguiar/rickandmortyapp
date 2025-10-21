@@ -14,7 +14,8 @@ class HomeViewModel(
     private val dispatcher: CoroutineContext,
     private val characterUseCase: CharacterUseCase
 ) : ViewModel() {
-    private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(HomeScreenState())
+    private val _state: MutableStateFlow<HomeScreenState> =
+        MutableStateFlow(HomeScreenState(isLoading = true))
     val state: StateFlow<HomeScreenState> get() = _state
 
     init {

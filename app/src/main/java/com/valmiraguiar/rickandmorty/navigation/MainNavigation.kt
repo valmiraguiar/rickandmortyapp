@@ -16,13 +16,13 @@ fun MainNavigation() {
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
             entry<Destination.Home> {
-                HomeScreen {
-                    backStack.add(Destination.Details)
+                HomeScreen { characterId ->
+                    backStack.add(Destination.Details(characterId))
                 }
             }
 
-            entry<Destination.Details> {
-                DetailsScreen()
+            entry<Destination.Details> { destinationData ->
+                DetailsScreen(characterId = destinationData.characterId)
             }
         }
     )
