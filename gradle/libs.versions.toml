@@ -19,6 +19,9 @@ retrofit = "3.0.0"
 moshi = "1.15.2"
 kspVersion = "2.2.0-2.0.2"
 coilVersion = "3.3.0"
+pagingVersion = "3.3.6"
+pagingComposeVersion = "3.3.6"
+roomVersion = "2.8.2"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -35,7 +38,7 @@ androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "u
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-compose-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-compose-default-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeIconsVersion"}
+androidx-compose-default-icons = { module = "androidx.compose.material:material-icons-extended", version.ref = "composeIconsVersion" }
 
 # Serialization
 kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinxSerializationJson" }
@@ -64,8 +67,17 @@ moshi-kotlin = { module = "com.squareup.moshi:moshi-kotlin", version.ref = "mosh
 moshi-kotlin-codegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshi" }
 
 # Coil
-coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilVersion"}
+coil = { module = "io.coil-kt.coil3:coil-compose", version.ref = "coilVersion" }
 coil-network = { module = "io.coil-kt.coil3:coil-network-okhttp", version.ref = "coilVersion" }
+
+# Paging
+paging-runtime = { module = "androidx.paging:paging-runtime", version.ref = "pagingVersion" }
+paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingComposeVersion" }
+
+# Room
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "roomVersion" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomVersion" }
+room-paging = { module = "androidx.room:room-paging", version.ref = "roomVersion" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

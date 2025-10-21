@@ -107,4 +107,13 @@ dependencies {
     // Coil
     implementation(libs.coil)
     implementation(libs.coil.network)
+
+    // Paging
+    implementation(libs.paging.runtime)
+    implementation(libs.paging.compose)
+
+    // Room
+    implementation(libs.room.ktx)
+    ksp(libs.room.compiler)
+    implementation(libs.room.paging)
 }

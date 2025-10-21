@@ -8,6 +8,7 @@ import com.valmiraguiar.rickandmorty.data.infrastructure.RetrofitBuilder
 import com.valmiraguiar.rickandmorty.data.infrastructure.create
 import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapper
 import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapperImpl
+import com.valmiraguiar.rickandmorty.data.repository.CharacterPagingSource
 import com.valmiraguiar.rickandmorty.data.remote.RickAndMortyApi
 import com.valmiraguiar.rickandmorty.data.repository.CharacterRepositoryImpl
 import com.valmiraguiar.rickandmorty.domain.repository.CharacterRepository
@@ -63,10 +64,16 @@ class ApplicationDI {
     }
 
     private fun Module.factoryRepository() {
-        factory<CharacterRepository> {
-            CharacterRepositoryImpl(
+        factory {
+            CharacterPagingSource(
                 api = get(),
                 mapper = get()
+            )
+        }
+
+        factory<CharacterRepository> {
+            CharacterRepositoryImpl(
+                characterPagingSource = get()
             )
         }
     }

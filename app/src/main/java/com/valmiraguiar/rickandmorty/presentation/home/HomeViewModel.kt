@@ -17,18 +17,22 @@ class HomeViewModel(
     private val _state: MutableStateFlow<HomeScreenState> = MutableStateFlow(HomeScreenState())
     val state: StateFlow<HomeScreenState> get() = _state
 
-    fun loadData() {
+    init {
+        loadData()
+    }
+
+    private fun loadData() {
         viewModelScope.launch {
             withContext(dispatcher) {
                 _state.update { it.copy(isLoading = true) }
 
                 try {
-                    characterUseCase.getCharacterList().collect { characterList ->
-                        _state.update {
-                            it.copy(
-                                characterList = characterList
-                            )
-                        }
+                    val characterListResult = characterUseCase.getCharacterList()
+
+                    _state.update {
+                        it.copy(
+                            characterList = characterListResult
+                        )
                     }
                 } catch (e: Exception) {
                     _state.update { it.copy(isError = true) }
