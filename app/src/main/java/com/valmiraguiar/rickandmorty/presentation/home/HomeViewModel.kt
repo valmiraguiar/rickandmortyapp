@@ -36,7 +36,6 @@ class HomeViewModel(
                     _state.update { it.copy(isError = true) }
                 }.collect { list ->
                     _characterList.update { list }
-                }.run {
                     _state.update { it.copy(isLoading = false) }
                 }
         }

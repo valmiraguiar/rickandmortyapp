@@ -1,6 +1,7 @@
 package com.valmiraguiar.rickandmorty.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.runtime.rememberNavBackStack
 import androidx.navigation3.ui.NavDisplay
@@ -8,10 +9,13 @@ import com.valmiraguiar.rickandmorty.presentation.details.DetailsScreen
 import com.valmiraguiar.rickandmorty.presentation.home.HomeScreen
 
 @Composable
-fun MainNavigation() {
+fun MainNavigation(
+    modifier: Modifier = Modifier
+) {
     val backStack = rememberNavBackStack(Destination.Home)
 
     NavDisplay(
+        modifier = modifier,
         backStack = backStack,
         onBack = { backStack.removeLastOrNull() },
         entryProvider = entryProvider {
