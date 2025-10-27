@@ -16,7 +16,7 @@ import com.valmiraguiar.rickandmorty.theme.RickAndMortyTheme
 
 @Composable
 fun TopBar(
-    modifier: Modifier
+    modifier: Modifier = Modifier
 ) {
     Box(
         modifier = modifier

@@ -24,12 +24,12 @@ class MainActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier
                         .fillMaxSize()
-                        .background(RickAndMortyTheme.colorScheme.background),
+                        .background(RickAndMortyTheme.colorScheme.background)
+                        .statusBarsPadding(),
                     topBar = {
-                        TopBar(
-                            modifier = Modifier.statusBarsPadding()
-                        )
-                    }
+                        TopBar()
+                    },
+                    containerColor = RickAndMortyTheme.colorScheme.background
                 ) { innerPadding ->
                     MainNavigation(modifier = Modifier.padding(innerPadding))
                 }
