@@ -8,14 +8,13 @@ import com.valmiraguiar.rickandmorty.data.infrastructure.RetrofitBuilder
 import com.valmiraguiar.rickandmorty.data.infrastructure.create
 import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapper
 import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapperImpl
-import com.valmiraguiar.rickandmorty.data.repository.CharacterPagingSource
 import com.valmiraguiar.rickandmorty.data.remote.RickAndMortyApi
+import com.valmiraguiar.rickandmorty.data.repository.CharacterPagingSource
 import com.valmiraguiar.rickandmorty.data.repository.CharacterRepositoryImpl
 import com.valmiraguiar.rickandmorty.domain.repository.CharacterRepository
 import com.valmiraguiar.rickandmorty.domain.usecases.CharacterUseCase
 import com.valmiraguiar.rickandmorty.presentation.details.DetailsViewModel
 import com.valmiraguiar.rickandmorty.presentation.home.HomeViewModel
-import kotlinx.coroutines.Dispatchers
 import org.koin.core.context.loadKoinModules
 import org.koin.core.module.Module
 import org.koin.core.module.dsl.viewModel
@@ -56,7 +55,6 @@ class ApplicationDI {
     private fun Module.factoryViewModel() {
         viewModel {
             HomeViewModel(
-                dispatcher = Dispatchers.IO,
                 characterUseCase = get()
             )
         }

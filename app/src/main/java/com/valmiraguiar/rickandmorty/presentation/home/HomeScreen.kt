@@ -23,7 +23,7 @@ fun HomeScreen(
     onNavigationClick: (characterId: Int) -> Unit
 ) {
     val characterState by vm.state.collectAsState()
-    val characterList = characterState.characterList.collectAsLazyPagingItems()
+    val characterList = vm.characterList.collectAsLazyPagingItems()
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
