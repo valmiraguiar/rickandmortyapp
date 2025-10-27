@@ -1,4 +1,4 @@
-package com.valmiraguiar.rickandmorty.presentation.home.components
+package com.valmiraguiar.rickandmorty.presentation.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

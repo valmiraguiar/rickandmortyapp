@@ -9,7 +9,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.valmiraguiar.rickandmorty.presentation.home.components.CharacterList
-import com.valmiraguiar.rickandmorty.presentation.home.components.Loading
+import com.valmiraguiar.rickandmorty.presentation.components.Loading
 import com.valmiraguiar.rickandmorty.theme.RickAndMortyTheme
 import org.koin.androidx.compose.koinViewModel
 
