@@ -7,7 +7,7 @@ import androidx.compose.ui.unit.sp
 val typography = AppTypography(
     titleLarge = TextStyle(
         fontWeight = FontWeight.Bold,
-        fontSize = 24.sp,
+        fontSize = 32.sp,
     ),
     titleNormal = TextStyle(
         fontWeight = FontWeight.Light,
@@ -23,10 +23,10 @@ val typography = AppTypography(
     ),
     labelNormal = TextStyle(
         fontWeight = FontWeight.Normal,
-        fontSize = 24.sp
+        fontSize = 18.sp
     ),
     labelSmall = TextStyle(
-        fontWeight = FontWeight.Normal,
+        fontWeight = FontWeight.Bold,
         fontSize = 12.sp
     )
 )

@@ -150,7 +150,7 @@ fun CharacterItem(
                                     modifier = Modifier
                                         .background(Yellow100, RoundedCornerShape(50))
                                         .padding(
-                                            horizontal = Dimensions.SpacingX,
+                                            horizontal = Dimensions.Spacing,
                                             vertical = Dimensions.SpacingXNano
                                         )
                                 ) {

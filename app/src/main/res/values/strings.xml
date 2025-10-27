@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">RickAndMorty</string>
     <string name="character_image">Character image</string>
+
+    <!-- labels -->
+    <string name="label_type">Type:</string>
+    <string name="label_gender">Gender:</string>
+    <string name="label_origin">Origin:</string>
 </resources>
