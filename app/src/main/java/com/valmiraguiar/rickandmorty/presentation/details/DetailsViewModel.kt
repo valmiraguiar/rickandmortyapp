@@ -1,24 +1,32 @@
 package com.valmiraguiar.rickandmorty.presentation.details
 
 import androidx.lifecycle.ViewModel
-import com.valmiraguiar.rickandmorty.domain.entity.Character
+import androidx.lifecycle.viewModelScope
+import com.valmiraguiar.rickandmorty.domain.usecases.CharacterUseCase
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class DetailsViewModel: ViewModel() {
-    fun getCharacter(characterId: Int): Character {
-        return MOCK_CHARACTER
-    }
+private typealias State = DetailsScreenState
 
-    private companion object {
-        val MOCK_CHARACTER = Character(
-            id = 1,
-            name = "Rick Sanchez",
-            status = "Alive",
-            specie = "Human",
-            type = "Human with antennae",
-            gender = "Male",
-            origin = "Earth (C-137)",
-            location = "Citadel of Ricks",
-            image = "https://rickandmortyapi.com/api/character/avatar/7.jpeg",
-        )
+class DetailsViewModel(
+    private val characterUseCase: CharacterUseCase
+) : ViewModel() {
+    private val _state: MutableStateFlow<State> =
+        MutableStateFlow(DetailsScreenState(isLoading = true))
+    val state: StateFlow<State> get() = _state
+
+    fun getCharacter(characterId: Int) {
+        viewModelScope.launch {
+            characterUseCase.getCharacterDetails(characterId)
+                .onStart { _state.update { it.copy(isLoading = true) } }
+                .catch { e -> _state.update { it.copy(isError = true, isLoading = false) } }
+                .collect { character ->
+                    _state.update { it.copy(character = character, isLoading = false) }
+                }
+        }
     }
 }

@@ -4,4 +4,4 @@ import com.valmiraguiar.rickandmorty.data.entities.CharacterResponse
 import com.valmiraguiar.rickandmorty.data.entities.DataMapper
 import com.valmiraguiar.rickandmorty.domain.entity.Character
 
-interface CharacterMapper : DataMapper<CharacterResponse, Character>
+interface CharacterListMapper : DataMapper<List<CharacterResponse>, List<Character>>

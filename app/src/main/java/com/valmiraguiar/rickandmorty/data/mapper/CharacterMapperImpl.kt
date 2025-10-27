@@ -1,23 +1,20 @@
 package com.valmiraguiar.rickandmorty.data.mapper
 
-import com.valmiraguiar.rickandmorty.data.entities.ResultResponse
+import com.valmiraguiar.rickandmorty.data.entities.CharacterResponse
 import com.valmiraguiar.rickandmorty.domain.entity.Character
 
 class CharacterMapperImpl : CharacterMapper {
-    override fun convert(dtoData: List<ResultResponse>): List<Character> = with(dtoData) {
-        return this.map {
-            Character(
-                id = it.id ?: 0,
-                name = it.name ?: "",
-                status = it.status ?: "",
-                specie = it.specie ?: "",
-                type = it.type ?: "",
-                gender = it.gender ?: "",
-                origin = it.origin?.locationName ?: "",
-                location = it.location?.locationName ?: "",
-                image = it.image ?: ""
-            )
-        }
+    override fun convert(dtoData: CharacterResponse): Character = with(dtoData) {
+        return Character(
+            id = this.id ?: 0,
+            name = this.name ?: "",
+            status = this.status ?: "",
+            specie = this.specie ?: "",
+            type = this.type ?: "",
+            gender = this.gender ?: "",
+            origin = this.origin?.locationName ?: "",
+            location = this.location?.locationName ?: "",
+            image = this.image ?: ""
+        )
     }
-
 }

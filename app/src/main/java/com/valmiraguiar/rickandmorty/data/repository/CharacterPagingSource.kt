@@ -2,13 +2,13 @@ package com.valmiraguiar.rickandmorty.data.repository
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapper
+import com.valmiraguiar.rickandmorty.data.mapper.CharacterListMapper
 import com.valmiraguiar.rickandmorty.data.remote.RickAndMortyApi
 import com.valmiraguiar.rickandmorty.domain.entity.Character
 
 class CharacterPagingSource(
     private val api: RickAndMortyApi,
-    private val mapper: CharacterMapper,
+    private val mapper: CharacterListMapper,
 ) : PagingSource<Int, Character>() {
     override fun getRefreshKey(state: PagingState<Int, Character>): Int? {
         return state.anchorPosition?.let { anchor ->
@@ -16,9 +16,9 @@ class CharacterPagingSource(
                 .closestPageToPosition(anchor)
                 ?.prevKey
                 ?.plus(ONE) ?: state
-                    .closestPageToPosition(anchor)
-                    ?.nextKey
-                    ?.minus(ONE)
+                .closestPageToPosition(anchor)
+                ?.nextKey
+                ?.minus(ONE)
         }
     }
 

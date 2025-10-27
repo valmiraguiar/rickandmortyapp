@@ -9,4 +9,5 @@ class CharacterUseCase(
     private val repository: CharacterRepository
 ) {
     fun getCharacterList(): Flow<PagingData<Character>> = repository.getCharacterList()
+    fun getCharacterDetails(id: Int): Flow<Character> = repository.getCharacter(id)
 }

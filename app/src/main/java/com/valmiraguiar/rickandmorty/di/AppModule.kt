@@ -6,6 +6,8 @@ import com.valmiraguiar.rickandmorty.data.infrastructure.MoshiHttpImpl
 import com.valmiraguiar.rickandmorty.data.infrastructure.OkHttpBuilder
 import com.valmiraguiar.rickandmorty.data.infrastructure.RetrofitBuilder
 import com.valmiraguiar.rickandmorty.data.infrastructure.create
+import com.valmiraguiar.rickandmorty.data.mapper.CharacterListMapper
+import com.valmiraguiar.rickandmorty.data.mapper.CharacterListMapperImpl
 import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapper
 import com.valmiraguiar.rickandmorty.data.mapper.CharacterMapperImpl
 import com.valmiraguiar.rickandmorty.data.remote.RickAndMortyApi
@@ -58,7 +60,11 @@ class ApplicationDI {
                 characterUseCase = get()
             )
         }
-        viewModel { DetailsViewModel() }
+        viewModel {
+            DetailsViewModel(
+                characterUseCase = get()
+            )
+        }
     }
 
     private fun Module.factoryRepository() {
@@ -71,12 +77,15 @@ class ApplicationDI {
 
         factory<CharacterRepository> {
             CharacterRepositoryImpl(
-                characterPagingSource = get()
+                api = get(),
+                characterPagingSource = get(),
+                mapper = get()
             )
         }
     }
 
     private fun Module.factoryMapper() {
+        factory<CharacterListMapper> { CharacterListMapperImpl() }
         factory<CharacterMapper> { CharacterMapperImpl() }
     }
 
