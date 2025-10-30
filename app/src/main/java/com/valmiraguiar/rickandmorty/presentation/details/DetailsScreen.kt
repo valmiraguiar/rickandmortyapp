@@ -15,6 +15,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -25,7 +26,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
+import androidx.core.view.drawToBitmap
 import coil3.compose.AsyncImage
 import com.valmiraguiar.rickandmorty.R
 import com.valmiraguiar.rickandmorty.presentation.components.Loading
@@ -35,6 +39,9 @@ import com.valmiraguiar.rickandmorty.theme.Dimensions
 import com.valmiraguiar.rickandmorty.theme.Gray100
 import com.valmiraguiar.rickandmorty.theme.Gray200
 import com.valmiraguiar.rickandmorty.theme.RickAndMortyTheme
+import com.valmiraguiar.rickandmorty.utils.bitmapToPdf
+import com.valmiraguiar.rickandmorty.utils.safeDrawToBitmap
+import com.valmiraguiar.rickandmorty.utils.sharePdf
 import org.koin.androidx.compose.koinViewModel
 
 private const val NAME_MAX_LINES = 2
@@ -46,6 +53,9 @@ fun DetailsScreen(
     vm: DetailsViewModel = koinViewModel<DetailsViewModel>(),
     characterId: Int
 ) {
+    val context = LocalContext.current
+    val view = LocalView.current
+
     val detailsState by vm.state.collectAsState()
 
     LaunchedEffect(Unit) {
@@ -59,7 +69,6 @@ fun DetailsScreen(
             .verticalScroll(rememberScrollState()),
         verticalArrangement = Arrangement.spacedBy(Dimensions.SpacingXSNano)
     ) {
-
         Loading(isVisible = detailsState.isLoading)
 
         detailsState.character?.let { character ->
@@ -136,6 +145,14 @@ fun DetailsScreen(
                 label = stringResource(R.string.label_origin),
                 value = character.origin
             )
+
+            Button(modifier = Modifier, onClick = {
+                val bitmap = view.safeDrawToBitmap()
+                val pdfFile = bitmapToPdf(context, bitmap)
+                sharePdf(context, pdfFile)
+            }) {
+                Text("SHARE")
+            }
         }
     }
 }
