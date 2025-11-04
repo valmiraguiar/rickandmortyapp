@@ -1,5 +1,8 @@
 package com.valmiraguiar.rickandmorty.presentation.details
 
+import android.graphics.Bitmap
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,6 +25,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,8 +33,11 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.stringResource
-import androidx.core.view.drawToBitmap
 import coil3.compose.AsyncImage
+import coil3.request.ImageRequest
+import coil3.request.allowHardware
+import coil3.request.bitmapConfig
+import coil3.request.crossfade
 import com.valmiraguiar.rickandmorty.R
 import com.valmiraguiar.rickandmorty.presentation.components.Loading
 import com.valmiraguiar.rickandmorty.presentation.details.components.InformationData
@@ -39,9 +46,10 @@ import com.valmiraguiar.rickandmorty.theme.Dimensions
 import com.valmiraguiar.rickandmorty.theme.Gray100
 import com.valmiraguiar.rickandmorty.theme.Gray200
 import com.valmiraguiar.rickandmorty.theme.RickAndMortyTheme
-import com.valmiraguiar.rickandmorty.utils.bitmapToPdf
-import com.valmiraguiar.rickandmorty.utils.safeDrawToBitmap
+import com.valmiraguiar.rickandmorty.utils.captureSoftBitmap
 import com.valmiraguiar.rickandmorty.utils.sharePdf
+import com.valmiraguiar.rickandmorty.utils.writeBitmapAsSinglePagePdf
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 private const val NAME_MAX_LINES = 2
@@ -54,12 +62,30 @@ fun DetailsScreen(
     characterId: Int
 ) {
     val context = LocalContext.current
-    val view = LocalView.current
+    val composeView = LocalView.current                 // This view IS attached to window
+    val scope = rememberCoroutineScope()
 
     val detailsState by vm.state.collectAsState()
 
     LaunchedEffect(Unit) {
         vm.getCharacter(characterId)
+    }
+
+    fun sharePageAsPdf(characterName: String, characterOrigin: String) {
+        scope.launch {
+            try {
+                val bmp = composeView.captureSoftBitmap()
+
+                val pdfUri = context.writeBitmapAsSinglePagePdf(
+                    bitmap = bmp,
+                    pdfName = "${characterName}-${characterOrigin}"
+                )
+                context.sharePdf(pdfUri)
+            } catch (e: Throwable) {
+                Toast.makeText(context, "Failed: ${e.message}", Toast.LENGTH_LONG).show()
+                Log.e("app ->", "Failed: ${e.message}", e)
+            }
+        }
     }
 
     Column(
@@ -73,7 +99,12 @@ fun DetailsScreen(
 
         detailsState.character?.let { character ->
             AsyncImage(
-                model = character.image,
+                model = ImageRequest.Builder(context)
+                    .data(character.image)
+                    .allowHardware(false)
+                    .bitmapConfig(Bitmap.Config.ARGB_8888)
+                    .crossfade(true)
+                    .build(),
                 contentDescription = "Character image",
                 modifier = Modifier
                     .height(Dimensions.DetailsCharacterImageHeight)
@@ -147,9 +178,10 @@ fun DetailsScreen(
             )
 
             Button(modifier = Modifier, onClick = {
-                val bitmap = view.safeDrawToBitmap()
-                val pdfFile = bitmapToPdf(context, bitmap)
-                sharePdf(context, pdfFile)
+                sharePageAsPdf(
+                    characterName = character.name,
+                    characterOrigin = character.origin
+                )
             }) {
                 Text("SHARE")
             }
